@@ -17,12 +17,12 @@
 		var height = window.innerHeight;
 
 		var player;
+
 		var platforms;
 		var cursors;
 
 		var stars;
 		var score = 0;
-		var scoreText;
 
 		var game = new Phaser.Game(width, height, Phaser.CANVAS, 'phaser-example', {
 			preload: preload,
@@ -30,6 +30,7 @@
 			update: update,
 			render: render
 		});
+
 
 		function preload() {
 			//Tilemap für die verschiedenen Maps
@@ -39,10 +40,22 @@
 			game.load.tilemap('map', 'assets/csv/map.csv', null, Phaser.Tilemap.CSV);
 
 			game.load.image('sky', 'assets/sky.png');
+
 			game.load.image('ground', 'assets/platform.png');
 			game.load.image('star', 'assets/star.png');
 			game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 
+			//Controls
+			game.load.image('controls_left_active', 'assets/controls/left_active.png');
+			game.load.image('controls_left_inactive', 'assets/controls/left_inactive.png');
+
+			game.load.image('controls_right_active', 'assets/controls/right_active.png');
+			game.load.image('controls_right_inactive', 'assets/controls/right_inactive.png');
+
+			game.load.image('controls_top_active', 'assets/controls/top_active.png');
+			game.load.image('controls_top_inactive', 'assets/controls/top_inactive.png');
+
+			game.load.image('controls_center', 'assets/controls/center.png');
 		}
 
 		function create() {
@@ -68,7 +81,7 @@
 			ground.body.immovable = true;
 
 			//  Now let's create two ledges
-			var ledge = platforms.create(400, 400, 'ground');
+			ledge = platforms.create(400, 400, 'ground');
 			ledge.body.immovable = true;
 
 			ledge = platforms.create(-150, 250, 'ground');
@@ -108,12 +121,29 @@
 				star.body.bounce.y = 0.7 + Math.random() * 0.2;
 			}
 
-			//  The score
-			scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
-			//  Our controls.
-			cursors = game.input.keyboard.createCursorKeys();
 
+			//Show Controls
+			var control_top = game.add.sprite(150, game.world.height-200, 'controls_top_inactive');
+			control_top.events.onInputDown.add(jump, this);
+
+			var control_left = game.add.sprite(50, game.world.height-100, 'controls_left_inactive');
+			control_left.inputEnabled = true;
+			control_left.events.onInputDown.add(moveLeft, this);
+
+			var control_right = game.add.sprite(250, game.world.height-100, 'controls_right_inactive');
+			control_right.inputEnabled = true;
+			control_right.events.onInputDown.add(moveRight, this);
+
+			game.add.sprite(150, game.world.height-100, 'controls_center');
+
+
+
+			//Scale to fit Mobile Screen
+			game.scale.pageAlignVertically = true;
+			game.scale.pageAlignHorizontally = true;
+			game.scale.setShowAll();
+			game.scale.refresh();
 		}
 
 		function update() {
@@ -121,54 +151,23 @@
 			game.physics.arcade.collide(player, platforms);
 			game.physics.arcade.collide(stars, platforms);
 
-			//  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-			game.physics.arcade.overlap(player, stars, collectStar, null, this);
-
-			//  Reset the players velocity (movement)
-			player.body.velocity.x = 0;
-
-			if (cursors.left.isDown)
-			{
-				//  Move to the left
-				player.body.velocity.x = -150;
-
-				player.animations.play('left');
-			}
-			else if (cursors.right.isDown)
-			{
-				//  Move to the right
-				player.body.velocity.x = 150;
-
-				player.animations.play('right');
-			}
-			else
-			{
-				//  Stand still
-				player.animations.stop();
-
-			}
-
-			//  Allow the player to jump if they are touching the ground.
-			if (cursors.up.isDown && player.body.touching.down)
-			{
-				player.body.velocity.y = -350;
-			}
-
-
 		}
 
 		function render() {
 
 		}
-		function collectStar (player, star) {
 
-			// Removes the star from the screen
-			star.kill();
+		function moveLeft() {
+			player.body.velocity.x = -150;
+			player.animations.play('left');
+		}
 
-			//  Add and update the score
-			score += 10;
-			scoreText.text = 'Score: ' + score;
-
+		function moveRight() {
+			player.body.velocity.x = 150;
+			player.animations.play('right');
+		}
+		function jump() {
+			player.body.velocity.y = -150;
 		}
 
 	</script>
