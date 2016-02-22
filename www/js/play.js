@@ -19,7 +19,7 @@ var playState = {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
 		//Adds the player character defines settings
-		player = game.add.sprite(32, game.world.height -80, 'dude');
+		player = game.add.sprite(32, game.world.height -144, 'dude');
 		game.physics.arcade.enable(player);
 		player.body.bounce.y = 0.05;
 		player.body.gravity.y = 300;
