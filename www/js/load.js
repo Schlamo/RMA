@@ -2,20 +2,18 @@ var loadState = {
 	preload: function () {
 
 		//Menu
-		game.load.image('menu','assets/menu/menu_large.png');
+		game.load.image('logo','assets/menu/logo.png');
 		game.load.image('start','assets/menu/start.png');
-		game.load.image('load','assets/menu/load.png');
+		game.load.image('highscore','assets/menu/highscore.png');
 
 
 		//.csv Tilemap
 		game.load.tilemap('map', 'assets/csv/level1.csv', null, Phaser.Tilemap.CSV);
+		game.load.tilemap('obstacle', 'assets/csv/obstacle1.csv', null, Phaser.Tilemap.CSV);
 
 		//Tiles
 		game.load.image('tiles', 'assets/tiles/tiles.png');
 		game.load.image('spikes', 'assets/tiles/spikes.png');
-
-		//Stars
-		game.load.image('star', 'assets/star.png');
 
 		//Player
 		game.load.spritesheet('dude', 'assets/sprites/dude.png', 32, 48);

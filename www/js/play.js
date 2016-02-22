@@ -1,25 +1,33 @@
 var playState = {
-	init : function (mapParamter) {
+	init: function (param1,param2) {
 
-		map = game.add.tilemap(mapParamter, 32, 32);
+		map = game.add.tilemap(param1, 32, 32);
+		obstacle = game.add.tilemap(param2, 32, 32);
 	},
 	create: function () {
 
-		//Now add in the tileset
+		//Coins
+		var maxCoins        = 10,
+			currentCoins    = 0;
+
+		//Now add the Tileset
 		map.addTilesetImage('tiles');
-
 		layer = map.createLayer(0);
-
 		layer.resizeWorld();
-		layer.y -= 75;
-		//Defines colliding Tiles
 		map.setCollisionBetween(1, 5);
+
+		obstacle.addTilesetImage('tiles');
+		oLayer = map.createLayer(0);
+		oLayer.resizeWorld();
+		obstacle.setCollisionBetween(0, 0);
+		console.log(map);
+		console.log(obstacle);
 
 		//Enable Game Physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
 		//Adds the player character defines settings
-		player = game.add.sprite(32, game.world.height -144, 'dude');
+		player = game.add.sprite(32, game.world.height - 144, 'dude');
 		game.physics.arcade.enable(player);
 		player.body.bounce.y = 0.05;
 		player.body.gravity.y = 300;
@@ -50,15 +58,29 @@ var playState = {
 		game.camera.follow(player);
 		this.stop();
 		//Show Menu
-		/*enu = game.add.sprite(0,0, 'menu');*/
+		/*menu = game.add.sprite(0,0, 'menu');*/
+
+		//Coins
+		coins = game.add.group();
+		coins.enableBody = true;
+		for (var i = 1; i < 12; i++) {
+			var coin = coins.create(i * 64, height-128, 'coin');
+			coin.body.velocity.y = 300;
+		}
+		coins.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3], 5, true);
+		coins.callAll('animations.play', 'animations', 'spin');
 	},
 
 	update: function () {
+		//Player and coins collide with the Tilemap
 		game.physics.arcade.collide(player, layer);
-		if(player.body.velocity.y > 0) {
+		game.physics.arcade.collide(coins, layer);
+
+		game.physics.arcade.overlap(player, coins, this.collectCoin, null, this);
+		if (player.body.velocity.y > 0) {
 			control_top.loadTexture('controls_top_inactive');
 		}
-		if(playerDirection > 0) {
+		if (playerDirection > 0) {
 			player.body.velocity.x = 150;
 		} else if (playerDirection < 0) {
 			player.body.velocity.x = -150;
@@ -83,19 +105,19 @@ var playState = {
 
 	stopMoveLeft: function () {
 		control_left.loadTexture('controls_left_inactive');
-		playerDirection +=1;
+		playerDirection += 1;
 		this.stop();
 	},
 
 	moveRight: function () {
 		control_right.loadTexture('controls_right_active');
-		playerDirection +=1;
+		playerDirection += 1;
 		player.animations.play('right');
 	},
 
 	stopMoveRight: function () {
 		control_right.loadTexture('controls_right_inactive');
-		playerDirection -=1;
+		playerDirection -= 1;
 		this.stop();
 	},
 
@@ -110,5 +132,9 @@ var playState = {
 		player.animations.stop();
 		player.loadTexture('dude', 4);
 		player.body.velocity.x = 0;
+	},
+
+	collectCoin: function (player, coin) {
+		coin.kill();
 	}
 };

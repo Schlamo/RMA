@@ -6,7 +6,8 @@ var game = new Phaser.Game(width, height, Phaser.AUTO, 'gameDiv');
 
 //Variables
 //Map
-var map;
+var map,
+	obstacle;
 //Map Layer
 var layer;
 //Player (Sprite etc.)
@@ -18,6 +19,7 @@ var playerDirection = 0;
 var control_left,
 	control_right,
 	control_top;
+var coins;
 
 //States
 game.state.add('boot', bootState);
@@ -28,3 +30,9 @@ game.state.add('win', winState);
 
 //Start bootState
 game.state.start('boot');
+
+function Map () {
+	this.csv;
+}
+
+var tutorial = new Map();
