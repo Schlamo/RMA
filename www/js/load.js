@@ -8,10 +8,11 @@ var loadState = {
 
 
 		//.csv Tilemap
-		game.load.tilemap('map', 'assets/csv/map.csv', null, Phaser.Tilemap.CSV);
+		game.load.tilemap('map', 'assets/csv/level1.csv', null, Phaser.Tilemap.CSV);
 
 		//Tiles
 		game.load.image('tiles', 'assets/tiles/tiles.png');
+		game.load.image('spikes', 'assets/tiles/spikes.png');
 
 		//Stars
 		game.load.image('star', 'assets/star.png');

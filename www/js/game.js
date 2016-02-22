@@ -17,9 +17,7 @@ var playerDirection = 0;
 //Controls
 var control_left,
 	control_right,
-	control_top,
-	control_attack;
-
+	control_top;
 
 //States
 game.state.add('boot', bootState);
@@ -29,8 +27,4 @@ game.state.add('play', playState);
 game.state.add('win', winState);
 
 //Start bootState
-game.state.start('boot')
-
-function Player() {
-
-}
+game.state.start('boot');

@@ -1,6 +1,9 @@
 var playState = {
+	init : function (mapParamter) {
+
+		map = game.add.tilemap(mapParamter, 32, 32);
+	},
 	create: function () {
-		map = game.add.tilemap('map', 32, 32);
 
 		//Now add in the tileset
 		map.addTilesetImage('tiles');
@@ -8,7 +11,7 @@ var playState = {
 		layer = map.createLayer(0);
 
 		layer.resizeWorld();
-
+		layer.y -= 75;
 		//Defines colliding Tiles
 		map.setCollisionBetween(1, 5);
 
@@ -18,7 +21,7 @@ var playState = {
 		//Adds the player character defines settings
 		player = game.add.sprite(32, game.world.height -80, 'dude');
 		game.physics.arcade.enable(player);
-		player.body.bounce.y = 0.2;
+		player.body.bounce.y = 0.05;
 		player.body.gravity.y = 300;
 		player.body.collideWorldBounds = true;
 
@@ -66,6 +69,10 @@ var playState = {
 
 	win: function () {
 		game.state.start('win');
+	},
+
+	lose: function () {
+		game.state.start('lose');
 	},
 
 	moveLeft: function () {
