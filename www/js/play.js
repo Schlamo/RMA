@@ -1,14 +1,10 @@
 var playState = {
-	init: function (param1,param2) {
-
-		map = game.add.tilemap(param1, 32, 32);
-		obstacle = game.add.tilemap(param2, 32, 32);
+	init: function (_map) {
+		currentMap = _map;
+		map = game.add.tilemap(currentMap.csv, 32, 32);
 	},
 	create: function () {
 
-		//Coins
-		var maxCoins        = 10,
-			currentCoins    = 0;
 
 		//Now add the Tileset
 		map.addTilesetImage('tiles');
@@ -16,18 +12,12 @@ var playState = {
 		layer.resizeWorld();
 		map.setCollisionBetween(1, 5);
 
-		obstacle.addTilesetImage('tiles');
-		oLayer = map.createLayer(0);
-		oLayer.resizeWorld();
-		obstacle.setCollisionBetween(0, 0);
-		console.log(map);
-		console.log(obstacle);
 
 		//Enable Game Physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
 		//Adds the player character defines settings
-		player = game.add.sprite(32, game.world.height - 144, 'dude');
+		player = game.add.sprite(96, game.world.height - 144, 'dude');
 		game.physics.arcade.enable(player);
 		player.body.bounce.y = 0.05;
 		player.body.gravity.y = 300;
@@ -63,8 +53,9 @@ var playState = {
 		//Coins
 		coins = game.add.group();
 		coins.enableBody = true;
-		for (var i = 1; i < 12; i++) {
-			var coin = coins.create(i * 64, height-128, 'coin');
+		for (var i = 0; i < 10; i++) {
+			var coin = coins.create(currentMap.coins[i].x, currentMap.coins[i].y, 'coin');
+
 			coin.body.velocity.y = 300;
 		}
 		coins.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3], 5, true);
@@ -77,6 +68,7 @@ var playState = {
 		game.physics.arcade.collide(coins, layer);
 
 		game.physics.arcade.overlap(player, coins, this.collectCoin, null, this);
+		game.physics.arcade.overlap(player, win, this.win, null, this);
 		if (player.body.velocity.y > 0) {
 			control_top.loadTexture('controls_top_inactive');
 		}
@@ -87,54 +79,60 @@ var playState = {
 		} else {
 			player.body.velocity.x = 0;
 		}
+
 	},
 
-	win: function () {
-		game.state.start('win');
-	},
+	win: function (player, win) {
 
+			game.state.start('win', true, false, currentMap);
+	},
 	lose: function () {
-		game.state.start('lose');
-	},
 
+			game.state.start('lose');
+	},
 	moveLeft: function () {
-		control_left.loadTexture('controls_left_active');
+
+			control_left.loadTexture('controls_left_active');
 		playerDirection -= 1;
 		player.animations.play('left');
 	},
-
 	stopMoveLeft: function () {
-		control_left.loadTexture('controls_left_inactive');
+
+			control_left.loadTexture('controls_left_inactive');
 		playerDirection += 1;
 		this.stop();
 	},
-
 	moveRight: function () {
-		control_right.loadTexture('controls_right_active');
+
+			control_right.loadTexture('controls_right_active');
 		playerDirection += 1;
 		player.animations.play('right');
 	},
-
 	stopMoveRight: function () {
-		control_right.loadTexture('controls_right_inactive');
+
+			control_right.loadTexture('controls_right_inactive');
 		playerDirection -= 1;
 		this.stop();
 	},
-
 	jump: function () {
+
 		if (player.body.velocity.y < 0 && player.body.velocity.y > -1) {
 			player.body.velocity.y = -250;
 			control_top.loadTexture('controls_top_active');
 		}
 	},
-
 	stop: function () {
+
 		player.animations.stop();
 		player.loadTexture('dude', 4);
 		player.body.velocity.x = 0;
 	},
-
 	collectCoin: function (player, coin) {
+
 		coin.kill();
+		currentCoins++;
+		if (currentCoins == maxCoins) {
+			win = game.add.sprite(currentMap.win.x, currentMap.win.y, 'win');
+		}
 	}
 };

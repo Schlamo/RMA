@@ -8,18 +8,20 @@ var loadState = {
 
 
 		//.csv Tilemap
-		game.load.tilemap('map', 'assets/csv/level1.csv', null, Phaser.Tilemap.CSV);
-		game.load.tilemap('obstacle', 'assets/csv/obstacle1.csv', null, Phaser.Tilemap.CSV);
+		game.load.tilemap('tutorial', 'assets/csv/level1.csv', null, Phaser.Tilemap.CSV);
+		var tutorial = new Map();
 
 		//Tiles
 		game.load.image('tiles', 'assets/tiles/tiles.png');
-		game.load.image('spikes', 'assets/tiles/spikes.png');
 
 		//Player
 		game.load.spritesheet('dude', 'assets/sprites/dude.png', 32, 48);
 
 		//Coins
 		game.load.spritesheet('coin', 'assets/sprites/coin.png', 32, 32);
+
+		//Pokal
+		game.load.image('win', 'assets/items/win.png', 32, 32);
 
 
 		//Controls
