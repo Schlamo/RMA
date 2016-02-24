@@ -50,7 +50,7 @@ var playState = {
 		//Coins
 		coins = game.add.group();
 		coins.enableBody = true;
-		for (var i = 0; i < currentMap.coins.length - 1; i++) {
+		for (var i = 0; i < currentMap.coins.length; i++) {
 			var coin = coins.create(currentMap.coins[i].x, currentMap.coins[i].y, 'coin');
 
 			coin.body.velocity.y = 300;
@@ -137,5 +137,12 @@ var playState = {
 			win.enableBody = true;
 			game.physics.arcade.enable(win);
 		}
+	},
+	back: function () {
+
+		game.state.start('level');
+	},
+	die: function() {
+
 	}
 };

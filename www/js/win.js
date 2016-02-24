@@ -1,19 +1,26 @@
 var winState = {
 	create: function () {
 
-		var winLabel = game.add.text(80, 80, 'YOU WON!', {
-			font: '50px Arial',
-			fill: '#00FF00'
-		});
+		//Menu Logo
+		var logo = game.add.sprite(0, 0, 'logo');
+		logo.anchor.set(0.5);
+		logo.x = width / 2;
+		logo.y = 70;
 
-		var startLabel = game.add.text(80, game.world.height - 80, 'Press the W key to restart!', {
-			font: '25px Arial',
-			fill: '#FFFFFF'
-		});
 
-	},
-	restart: function () {
-
+		switch (currentMap.csv) {
+			case 'tutorial':
+				crypt.isLocked = false;
+				break;
+			case 'crypt':
+				nexus.isLocked = false;
+				break;
+			case 'nexus':
+				crypt.isLocked = false;
+				break;
+			case 'cookies':
+				crypt.isLocked = false;
+		}
 		game.state.start('menu');
 	}
-}
+};

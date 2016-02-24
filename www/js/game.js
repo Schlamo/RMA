@@ -6,8 +6,7 @@ var game = new Phaser.Game(width, height, Phaser.AUTO, 'gameDiv');
 
 //Variables
 //Map
-var map,
-	obstacle;
+var map;
 //Map Layer
 var layer;
 //Player (Sprite etc.)
@@ -17,13 +16,13 @@ var player,
 var playerDirection = 0;
 //Coins
 var maxCoins = 10,
-	currentCoins = 0,
-	scoreText;
+	currentCoins = 0;
 
 //Controls
 var control_left,
 	control_right,
 	control_top;
+
 
 //States
 game.state.add('boot', bootState);

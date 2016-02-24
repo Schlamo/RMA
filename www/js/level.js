@@ -13,7 +13,7 @@ var levelState = {
 		level.y = 130;
 
 		//Back Button
-		var back = game.add.sprite(0, 0, 'back')
+		var back = game.add.sprite(0, 0, 'back_green');
 		back.x = 15;
 		back.y = 15;
 		back.inputEnabled = true;
@@ -22,29 +22,38 @@ var levelState = {
 		var level1 = game.add.sprite(0, 0, '1_unlocked');
 		level1.anchor.set(0.5);
 		level1.x = width * 0.1;
-		level1.y = height - 125;
+		level1.y = height - 75;
 		level1.inputEnabled = true;
-		level1.events.onInputDown.add(this.startLevel);
+		level1.events.onInputDown.add(function () {
+			levelState.startLevel(1);
+		});
 
 		var level2 = game.add.sprite(0, 0, '2_locked');
+		if (!crypt.isLocked) {
+			level2.loadTexture('2_unlocked');
+		}
 		level2.anchor.set(0.5);
 		level2.x = width * 0.3;
-		level2.y = height - 125;
+		level2.y = height - 75;
+		level2.inputEnabled = true;
+		level2.events.onInputDown.add(function () {
+			levelState.startLevel(2);
+		});
 
 		var level3 = game.add.sprite(0, 0, '3_locked');
 		level3.anchor.set(0.5);
 		level3.x = width * 0.5;
-		level3.y = height - 125;
+		level3.y = height - 75;
 
 		var level4 = game.add.sprite(0, 0, '4_locked');
 		level4.anchor.set(0.5);
 		level4.x = width * 0.7;
-		level4.y = height - 125;
+		level4.y = height - 75;
 
 		var level5 = game.add.sprite(0, 0, '5_locked');
 		level5.anchor.set(0.5);
 		level5.x = width * 0.9;
-		level5.y = height - 125;
+		level5.y = height - 75;
 	},
 
 	back: function () {
@@ -54,6 +63,15 @@ var levelState = {
 
 	startLevel: function (number) {
 
-		game.state.start('play', true, false, tutorial);
+		switch (number) {
+			case 1:
+				game.state.start('play', true, false, tutorial);
+				break;
+			case 2:
+				if(!crypt.isLocked) {
+					game.state.start('play', true, false, crypt);
+					break;
+				}
+		}
 	}
 };
