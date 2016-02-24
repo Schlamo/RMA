@@ -19,8 +19,7 @@ var playState = {
 		//Adds the player character defines settings
 		player = game.add.sprite(96, game.world.height - 144, 'dude');
 		game.physics.arcade.enable(player);
-		player.body.bounce.y = 0.05;
-		player.body.gravity.y = 300;
+		player.body.gravity.y = 400;
 		player.body.collideWorldBounds = true;
 
 		//Animations for the player sprite
@@ -53,7 +52,7 @@ var playState = {
 		//Coins
 		coins = game.add.group();
 		coins.enableBody = true;
-		for (var i = 0; i < 10; i++) {
+		for (var i = 0; i < currentMap.coins.length-1; i++) {
 			var coin = coins.create(currentMap.coins[i].x, currentMap.coins[i].y, 'coin');
 
 			coin.body.velocity.y = 300;
@@ -84,7 +83,8 @@ var playState = {
 
 	win: function (player, win) {
 
-			game.state.start('win', true, false, currentMap);
+		win.kill();
+		game.state.start('win', true, false, currentMap);
 	},
 	lose: function () {
 
@@ -116,8 +116,8 @@ var playState = {
 	},
 	jump: function () {
 
-		if (player.body.velocity.y < 0 && player.body.velocity.y > -1) {
-			player.body.velocity.y = -250;
+		if (player.body.velocity.y == 0) {
+			player.body.velocity.y = -300;
 			control_top.loadTexture('controls_top_active');
 		}
 	},
@@ -133,6 +133,8 @@ var playState = {
 		currentCoins++;
 		if (currentCoins == maxCoins) {
 			win = game.add.sprite(currentMap.win.x, currentMap.win.y, 'win');
+			win.enableBody = true;
+			game.physics.arcade.enable(win);
 		}
 	}
 };
