@@ -6,22 +6,29 @@ var menuState = {
 		logo.x = width/2;
 		logo.y = 70;
 
-		var startLine = game.add.sprite(0, 0, 'start');
-		startLine.anchor.set(0.5);
-		startLine.x = width / 2;
-		startLine.y = 170;
-		startLine.inputEnabled = true;
-		startLine.events.onInputDown.add(this.start);
+		var selectLevel = game.add.sprite(0, 0, 'level');
+		selectLevel.anchor.set(0.5);
+		selectLevel.x = width / 2;
+		selectLevel.y = 220;
+		selectLevel.inputEnabled = true;
+		selectLevel.events.onInputDown.add(this.getLevelScreen);
 
-		var loadLine = game.add.sprite(0, 0, 'highscore');
-		loadLine.anchor.set(0.5);
-		loadLine.x = width / 2;
-		loadLine.y = 250;
+		var highscore = game.add.sprite(0, 0, 'highscore');
+		highscore.anchor.set(0.5);
+		highscore.x = width / 2;
+		highscore.y = 300;
+		highscore.inputEnabled = true;
+		highscore.events.onInputDown.add(this.getHighscoreScreen);
 
 	},
 
-	start: function () {
+	getLevelScreen: function () {
 
-		game.state.start('play', true, false, tutorial);
+		game.state.start('level');
+	},
+
+	getHighscoreScreen: function() {
+
+		game.state.start('highscore');
 	}
 };

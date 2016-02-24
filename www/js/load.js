@@ -3,13 +3,30 @@ var loadState = {
 
 		//Menu
 		game.load.image('logo','assets/menu/logo.png');
+		game.load.image('level','assets/menu/level.png');
 		game.load.image('start','assets/menu/start.png');
 		game.load.image('highscore','assets/menu/highscore.png');
+		game.load.image('back','assets/menu/back.png');
+
+
+		//Levels
+		game.load.image('1_unlocked','assets/level/1_unlocked.png');
+
+		game.load.image('2_locked','assets/level/2_locked.png');
+		game.load.image('2_unlocked','assets/level/2_unlocked.png');
+
+		game.load.image('3_locked','assets/level/3_locked.png');
+		game.load.image('3_unlocked','assets/level/3_unlocked.png');
+
+		game.load.image('4_locked','assets/level/4_locked.png');
+		game.load.image('4_unlocked','assets/level/4_unlocked.png');
+
+		game.load.image('5_locked','assets/level/5_locked.png');
+		game.load.image('5_unlocked','assets/level/5_unlocked.png');
 
 
 		//.csv Tilemap
-		game.load.tilemap('tutorial', 'assets/csv/level1.csv', null, Phaser.Tilemap.CSV);
-		var tutorial = new Map();
+		game.load.tilemap('tutorial', 'assets/csv/tutorial.csv', null, Phaser.Tilemap.CSV);
 
 		//Tiles
 		game.load.image('tiles', 'assets/tiles/tiles.png');

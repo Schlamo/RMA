@@ -29,16 +29,12 @@ var control_left,
 game.state.add('boot', bootState);
 game.state.add('load', loadState);
 game.state.add('menu', menuState);
+game.state.add('level', levelState);
+game.state.add('highscore', highscoreState);
 game.state.add('play', playState);
 game.state.add('win', winState);
 
 //Start bootState
 game.state.start('boot');
-
-function Map(csv, coins, win) {
-	this.csv = csv;
-	this.coins = coins;
-	this.win = win;
-}
 
 var currentMap;

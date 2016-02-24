@@ -1,10 +1,10 @@
 var playState = {
 	init: function (_map) {
+
 		currentMap = _map;
 		map = game.add.tilemap(currentMap.csv, 32, 32);
 	},
 	create: function () {
-
 
 		//Now add the Tileset
 		map.addTilesetImage('tiles');
@@ -12,15 +12,15 @@ var playState = {
 		layer.resizeWorld();
 		map.setCollisionBetween(1, 5);
 
-
 		//Enable Game Physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
-		//Adds the player character defines settings
+		//Adds the Player Character & Settings
 		player = game.add.sprite(96, game.world.height - 144, 'dude');
 		game.physics.arcade.enable(player);
 		player.body.gravity.y = 400;
 		player.body.collideWorldBounds = true;
+		game.camera.follow(player);
 
 		//Animations for the player sprite
 		player.animations.add('left', [0, 1, 2, 3], 10, true);
@@ -44,21 +44,22 @@ var playState = {
 		control_top.inputEnabled = true;
 		control_top.events.onInputDown.add(this.jump, this);
 
-		game.camera.follow(player);
-		this.stop();
 		//Show Menu
 		/*menu = game.add.sprite(0,0, 'menu');*/
 
 		//Coins
 		coins = game.add.group();
 		coins.enableBody = true;
-		for (var i = 0; i < currentMap.coins.length-1; i++) {
+		for (var i = 0; i < currentMap.coins.length - 1; i++) {
 			var coin = coins.create(currentMap.coins[i].x, currentMap.coins[i].y, 'coin');
 
 			coin.body.velocity.y = 300;
 		}
 		coins.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3], 5, true);
 		coins.callAll('animations.play', 'animations', 'spin');
+
+		//Character looking at the camera
+		this.stop();
 	},
 
 	update: function () {
@@ -88,29 +89,29 @@ var playState = {
 	},
 	lose: function () {
 
-			game.state.start('lose');
+		game.state.start('lose');
 	},
 	moveLeft: function () {
 
-			control_left.loadTexture('controls_left_active');
+		control_left.loadTexture('controls_left_active');
 		playerDirection -= 1;
 		player.animations.play('left');
 	},
 	stopMoveLeft: function () {
 
-			control_left.loadTexture('controls_left_inactive');
+		control_left.loadTexture('controls_left_inactive');
 		playerDirection += 1;
 		this.stop();
 	},
 	moveRight: function () {
 
-			control_right.loadTexture('controls_right_active');
+		control_right.loadTexture('controls_right_active');
 		playerDirection += 1;
 		player.animations.play('right');
 	},
 	stopMoveRight: function () {
 
-			control_right.loadTexture('controls_right_inactive');
+		control_right.loadTexture('controls_right_inactive');
 		playerDirection -= 1;
 		this.stop();
 	},
