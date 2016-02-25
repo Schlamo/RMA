@@ -2,6 +2,7 @@ var playState = {
 	init: function (_map) {
 
 		currentMap = _map;
+		currentCoins = 0;
 		map = game.add.tilemap(currentMap.csv, 32, 32);
 	},
 	create: function () {

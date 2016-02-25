@@ -1,19 +1,20 @@
+//Variables-------------------------------------------------------------------------------------------------------------
+
 //Window Width & Height
 var width = window.innerWidth;
 var height = window.innerHeight;
-
 var game = new Phaser.Game(width, height, Phaser.AUTO, 'gameDiv');
 
-//Variables
 //Map
-var map;
-//Map Layer
-var layer;
+var map,
+	layer;
+
 //Player (Sprite etc.)
 var player,
-	win;
-//Walk Direction for the player sprite ( -1 = left  |  0 = none  |  1 = right )
-var playerDirection = 0;
+	win,
+	currentMap,
+	playerDirection = 0;    //Walk Direction for the player sprite ( -1 = left  |  0 = none  |  1 = right )
+
 //Coins
 var maxCoins = 10,
 	currentCoins = 0;
@@ -24,16 +25,13 @@ var control_left,
 	control_top;
 
 
-//States
-game.state.add('boot', bootState);
-game.state.add('load', loadState);
-game.state.add('menu', menuState);
-game.state.add('level', levelState);
-game.state.add('highscore', highscoreState);
-game.state.add('play', playState);
-game.state.add('win', winState);
+//States----------------------------------------------------------------------------------------------------------------
+game.state.add('boot', bootState);              //Boot
+game.state.add('load', loadState);              //Load
+game.state.add('menu', menuState);              //Game Menu
+game.state.add('level', levelState);            //Level Select
+game.state.add('highscore', highscoreState);    //Highscore Screen
+game.state.add('play', playState);              //The Game
+game.state.add('win', winState);                //Winning Screen
 
-//Start bootState
-game.state.start('boot');
-
-var currentMap;
+game.state.start('boot');                       //Start bootState

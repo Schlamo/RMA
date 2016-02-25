@@ -33,7 +33,7 @@ var loadState = {
 		game.load.image('tiles', 'assets/tiles/tiles.png');
 
 		//Player
-		game.load.spritesheet('dude', 'assets/sprites/dude.png', 32, 48);
+		game.load.spritesheet('dude', 'assets/sprites/dude.png', 32, 35);
 
 		//Coins & Spikes
 		game.load.spritesheet('coin', 'assets/sprites/coin.png', 32, 32);
