@@ -41,9 +41,16 @@ var levelState = {
 		});
 
 		var level3 = game.add.sprite(0, 0, '3_locked');
+		if (!nexus.isLocked) {
+			level3.loadTexture('3_unlocked');
+		}
 		level3.anchor.set(0.5);
 		level3.x = width * 0.5;
 		level3.y = height - 75;
+		level3.inputEnabled = true;
+		level3.events.onInputDown.add(function () {
+			levelState.startLevel(3);
+		});
 
 		var level4 = game.add.sprite(0, 0, '4_locked');
 		level4.anchor.set(0.5);
@@ -68,10 +75,15 @@ var levelState = {
 				game.state.start('play', true, false, tutorial);
 				break;
 			case 2:
-				if(!crypt.isLocked) {
+				if (!crypt.isLocked) {
 					game.state.start('play', true, false, crypt);
-					break;
 				}
+				break;
+			case 3:
+				if (!nexus.isLocked) {
+					game.state.start('play', true, false, nexus);
+				}
+				break;
 		}
 	}
 };

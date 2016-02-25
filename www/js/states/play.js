@@ -5,6 +5,7 @@ var playState = {
 		currentCoins = 0;
 		map = game.add.tilemap(currentMap.csv, 32, 32);
 	},
+
 	create: function () {
 
 		//Now add the Tileset
@@ -46,28 +47,23 @@ var playState = {
 		control_top.inputEnabled = true;
 		control_top.events.onInputDown.add(this.jump, this);
 
-		//Show Menu
-		/*menu = game.add.sprite(0,0, 'menu');*/
-
 		//Coins
 		coins = game.add.group();
 		coins.enableBody = true;
 		for (var i = 0; i < currentMap.coins.length; i++) {
 			var coin = coins.create(currentMap.coins[i].x * 32, currentMap.coins[i].y * 32, 'coin');
-
 			coin.body.velocity.y = 300;
 		}
 		coins.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3], 5, true);
 		coins.callAll('animations.play', 'animations', 'spin');
 
+
 		//Spikes
 		spikes = game.add.group();
-
+		spikes.enableBody = true;
 		if (currentMap.spikes) {
-			spikes.enableBody = true;
-			for (var i = 0; i < currentMap.spikes.length; i++) {
+			for (i = 0; i < currentMap.spikes.length; i++) {
 				var spike = spikes.create(currentMap.spikes[i].x * 32, currentMap.spikes[i].y * 32, 'spike');
-
 				coin.body.velocity.y = 300;
 			}
 		}
@@ -84,9 +80,11 @@ var playState = {
 		game.physics.arcade.overlap(player, coins, this.collectCoin, null, this);
 		game.physics.arcade.overlap(player, spikes, this.die, null, this);
 		game.physics.arcade.overlap(player, win, this.win, null, this);
+
 		if (player.body.velocity.y > 0) {
 			control_top.loadTexture('controls_top_inactive');
 		}
+
 		if (playerDirection > 0) {
 			player.body.velocity.x = 150;
 		} else if (playerDirection < 0) {
@@ -94,56 +92,55 @@ var playState = {
 		} else {
 			player.body.velocity.x = 0;
 		}
-
 	},
 
 	win: function (player, win) {
-
 		win.kill();
 		game.state.start('win', true, false, currentMap);
 	},
-	lose: function () {
 
+	lose: function () {
 		game.state.start('lose');
 	},
-	moveLeft: function () {
 
+	moveLeft: function () {
 		control_left.loadTexture('controls_left_active');
 		playerDirection -= 1;
 		player.animations.play('left');
 	},
-	stopMoveLeft: function () {
 
+	stopMoveLeft: function () {
 		control_left.loadTexture('controls_left_inactive');
 		playerDirection += 1;
 		this.stop();
 	},
-	moveRight: function () {
 
+	moveRight: function () {
 		control_right.loadTexture('controls_right_active');
 		playerDirection += 1;
 		player.animations.play('right');
 	},
-	stopMoveRight: function () {
 
+	stopMoveRight: function () {
 		control_right.loadTexture('controls_right_inactive');
 		playerDirection -= 1;
 		this.stop();
 	},
-	jump: function () {
 
+	jump: function () {
 		if (player.body.velocity.y == 0) {
 			player.body.velocity.y = -300;
 			control_top.loadTexture('controls_top_active');
 		}
 	},
+
 	stop: function () {
 		player.animations.stop();
 		player.loadTexture('dude', 4);
 		player.body.velocity.x = 0;
 	},
-	collectCoin: function (player, coin) {
 
+	collectCoin: function (player, coin) {
 		coin.kill();
 		currentCoins++;
 		if (currentCoins == maxCoins) {
@@ -152,10 +149,11 @@ var playState = {
 			game.physics.arcade.enable(win);
 		}
 	},
-	back: function () {
 
+	back: function () {
 		game.state.start('level');
 	},
+
 	die: function () {
 		game.state.start('level');
 	}
