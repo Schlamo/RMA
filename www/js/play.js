@@ -11,6 +11,7 @@ var playState = {
 		layer = map.createLayer(0);
 		layer.resizeWorld();
 		map.setCollisionBetween(1, 5);
+		map.setCollision(20);
 
 		//Enable Game Physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -51,12 +52,24 @@ var playState = {
 		coins = game.add.group();
 		coins.enableBody = true;
 		for (var i = 0; i < currentMap.coins.length; i++) {
-			var coin = coins.create(currentMap.coins[i].x, currentMap.coins[i].y, 'coin');
+			var coin = coins.create(currentMap.coins[i].x * 32, currentMap.coins[i].y * 32, 'coin');
 
 			coin.body.velocity.y = 300;
 		}
 		coins.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3], 5, true);
 		coins.callAll('animations.play', 'animations', 'spin');
+
+		//Spikes
+		spikes = game.add.group();
+
+		if (currentMap.spikes) {
+			spikes.enableBody = true;
+			for (var i = 0; i < currentMap.spikes.length; i++) {
+				var spike = spikes.create(currentMap.spikes[i].x * 32, currentMap.spikes[i].y * 32, 'spike');
+
+				coin.body.velocity.y = 300;
+			}
+		}
 
 		//Character looking at the camera
 		this.stop();
@@ -68,6 +81,7 @@ var playState = {
 		game.physics.arcade.collide(coins, layer);
 
 		game.physics.arcade.overlap(player, coins, this.collectCoin, null, this);
+		game.physics.arcade.overlap(player, spikes, this.die, null, this);
 		game.physics.arcade.overlap(player, win, this.win, null, this);
 		if (player.body.velocity.y > 0) {
 			control_top.loadTexture('controls_top_inactive');
@@ -123,7 +137,6 @@ var playState = {
 		}
 	},
 	stop: function () {
-
 		player.animations.stop();
 		player.loadTexture('dude', 4);
 		player.body.velocity.x = 0;
@@ -133,7 +146,7 @@ var playState = {
 		coin.kill();
 		currentCoins++;
 		if (currentCoins == maxCoins) {
-			win = game.add.sprite(currentMap.win.x, currentMap.win.y, 'win');
+			win = game.add.sprite(currentMap.win.x * 32, currentMap.win.y * 32, 'win');
 			win.enableBody = true;
 			game.physics.arcade.enable(win);
 		}
@@ -142,7 +155,7 @@ var playState = {
 
 		game.state.start('level');
 	},
-	die: function() {
-
+	die: function () {
+		game.state.start('level');
 	}
 };

@@ -35,8 +35,9 @@ var loadState = {
 		//Player
 		game.load.spritesheet('dude', 'assets/sprites/dude.png', 32, 48);
 
-		//Coins
+		//Coins & Spikes
 		game.load.spritesheet('coin', 'assets/sprites/coin.png', 32, 32);
+		game.load.spritesheet('spike', 'assets/tiles/spike.png', 32, 32);
 
 		//Pokal
 		game.load.image('win', 'assets/items/win.png', 32, 32);

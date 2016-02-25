@@ -21,6 +21,6 @@ var winState = {
 			case 'cookies':
 				crypt.isLocked = false;
 		}
-		game.state.start('menu');
+		game.state.start('level');
 	}
 };
