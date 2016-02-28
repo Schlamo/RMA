@@ -1,4 +1,7 @@
 var winState = {
+	init: function (_time) {
+		currentTime = _time;
+	},
 	create: function () {
 
 		//Menu Logo
@@ -7,6 +10,23 @@ var winState = {
 		logo.x = width / 2;
 		logo.y = 70;
 
+		var win = game.add.sprite(0, 0, 'victory');
+		win.anchor.set(0.5);
+		win.x = width / 2;
+		win.y = 150;
+
+		var okay = game.add.sprite(0, 0, 'okay');
+		okay.anchor.set(0.5);
+		okay.x = width / 2;
+		okay.y = height-75;
+		okay.inputEnabled = true;
+		okay.events.onInputDown.add(function () {
+			levelState.startLevel(4);
+		});
+
+		var style = { font: "65px Arial", fill: "#ffffff", align: "center" };
+		var text = game.add.text(0,0, currentTime, style);
+		text.anchor.setTo(0.5);
 
 		switch (currentMap.csv) {
 			case 'tutorial':
@@ -21,6 +41,5 @@ var winState = {
 			case 'cookies':
 				crypt.isLocked = false;
 		}
-		game.state.start('level');
 	}
 };

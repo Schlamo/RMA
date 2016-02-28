@@ -7,7 +7,7 @@ var playState = {
 	},
 
 	create: function () {
-		shake.startWatch(this.back, 40);
+		//shake.startWatch(this.back, 40);
 
 		//Now add the Tileset
 		map.addTilesetImage('tiles');
@@ -88,6 +88,10 @@ var playState = {
 
 		//Character looking at the camera
 		this.stop();
+
+		//Timer
+		timer = game.time.create(false);
+		timer.start();
 	},
 
 	update: function () {
@@ -135,7 +139,7 @@ var playState = {
 
 	win: function (player, win) {
 		win.kill();
-		game.state.start('win', true, false, currentMap);
+		game.state.start('win', true, false, timer.duration);
 	},
 
 	lose: function () {

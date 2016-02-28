@@ -20,6 +20,11 @@ var menuState = {
 		highscore.inputEnabled = true;
 		highscore.events.onInputDown.add(this.getHighscoreScreen);
 
+		var shake = game.add.sprite(0, 0, 'shake');
+		shake.anchor.set(0.5);
+		shake.x = width* 0.85;
+		shake.y = 70;
+		shake.scale.setTo(0.1);
 	},
 
 	getLevelScreen: function () {

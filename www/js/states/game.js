@@ -11,12 +11,14 @@ var map,
 
 //Player (Sprite etc.)
 var player,
+	timer,
 	win,
 	currentMap,
+	currentTime ,
 	playerDirection = 0;    //Walk Direction for the player sprite ( -1 = left  |  0 = none  |  1 = right )
 
 //Coins
-var maxCoins = 10,
+var maxCoins = 1,
 	currentCoins = 0;
 
 //Controls

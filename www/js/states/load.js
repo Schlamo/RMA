@@ -3,7 +3,10 @@ var loadState = {
 
 		//Menu
 		game.load.image('logo','assets/menu/logo.png');
+		game.load.image('okay','assets/menu/okay.png');
+		game.load.image('victory','assets/menu/win.png');
 		game.load.image('level','assets/menu/level.png');
+		game.load.image('shake','assets/menu/shake_info.png');
 		game.load.image('highscore','assets/menu/highscore.png');
 		game.load.image('back_red','assets/menu/back_red.png');
 		game.load.image('back_green','assets/menu/back_green.png');
