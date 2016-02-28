@@ -7,6 +7,7 @@ var playState = {
 	},
 
 	create: function () {
+		shake.startWatch(this.back, 40);
 
 		//Now add the Tileset
 		map.addTilesetImage('tiles');
@@ -68,6 +69,23 @@ var playState = {
 			}
 		}
 
+
+		//Enemies
+		enemies = game.add.group();
+		enemies.enableBody = true;
+		if (currentMap.enemies) {
+
+			for (i = 0; i < currentMap.enemies.length; i++) {
+				var currentEnemy = currentMap.enemies[i];
+				var enemy = enemies.create(currentEnemy.src * 32, currentEnemy.y * 32 + 6, currentEnemy.sprite);
+				enemy.reverse = false;
+			}
+		}
+		enemies.callAll('animations.add', 'animations', 'right', [1, 2], 5, true);
+		enemies.callAll('animations.add', 'animations', 'left', [4, 4], 5, true);
+		enemies.callAll('animations.play', 'animations', 'left');
+		enemies.callAll('body.velocity.x', 50);
+
 		//Character looking at the camera
 		this.stop();
 	},
@@ -78,6 +96,7 @@ var playState = {
 		game.physics.arcade.collide(coins, layer);
 
 		game.physics.arcade.overlap(player, coins, this.collectCoin, null, this);
+		game.physics.arcade.overlap(player, enemies, this.die, null, this);
 		game.physics.arcade.overlap(player, spikes, this.die, null, this);
 		game.physics.arcade.overlap(player, win, this.win, null, this);
 
@@ -92,6 +111,26 @@ var playState = {
 		} else {
 			player.body.velocity.x = 0;
 		}
+
+		enemies.forEach(function (enemy) {
+			var index = enemies.getChildIndex(enemy);
+			var src = currentMap.enemies[index].src;
+			var dest = currentMap.enemies[index].dest;
+			if (enemy.worldPosition.x >= dest * 32) {
+				enemy.reverse = true;
+				enemy.animations.play('left');
+			} else if (enemy.worldPosition.x <= src * 32) {
+				enemy.reverse = false;
+				enemy.animations.play('right');
+			}
+
+			if (enemy.reverse) {
+				enemy.body.velocity.x = -100;
+			} else {
+				enemy.body.velocity.x = 100;
+			}
+
+		});
 	},
 
 	win: function (player, win) {

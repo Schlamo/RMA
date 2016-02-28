@@ -29,6 +29,7 @@ var loadState = {
 		game.load.tilemap('tutorial', 'assets/csv/tutorial.csv', null, Phaser.Tilemap.CSV);
 		game.load.tilemap('crypt', 'assets/csv/crypt.csv', null, Phaser.Tilemap.CSV);
 		game.load.tilemap('nexus', 'assets/csv/nexus.csv', null, Phaser.Tilemap.CSV);
+		game.load.tilemap('cristpo', 'assets/csv/cristpo.csv', null, Phaser.Tilemap.CSV);
 
 		//Tiles
 		game.load.image('tiles', 'assets/tiles/tiles.png');
@@ -37,7 +38,7 @@ var loadState = {
 		game.load.spritesheet('dude', 'assets/sprites/dude.png', 32, 35);
 
 		//Enemie(s)
-		game.load.spritesheet('wubble', 'assets/sprites/dude.png', 32, 26);
+		game.load.spritesheet('wubble', 'assets/sprites/wubble.png', 32, 26);
 
 		//Coins & Spikes
 		game.load.spritesheet('coin', 'assets/sprites/coin.png', 32, 32);

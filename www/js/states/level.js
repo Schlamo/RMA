@@ -53,9 +53,16 @@ var levelState = {
 		});
 
 		var level4 = game.add.sprite(0, 0, '4_locked');
+		if (!cristpo.isLocked) {
+			level4.loadTexture('4_unlocked');
+		}
 		level4.anchor.set(0.5);
 		level4.x = width * 0.7;
 		level4.y = height - 75;
+		level4.inputEnabled = true;
+		level4.events.onInputDown.add(function () {
+			levelState.startLevel(4);
+		});
 
 		var level5 = game.add.sprite(0, 0, '5_locked');
 		level5.anchor.set(0.5);
@@ -82,6 +89,11 @@ var levelState = {
 			case 3:
 				if (!nexus.isLocked) {
 					game.state.start('play', true, false, nexus);
+				}
+				break;
+			case 4:
+				if (!cristpo.isLocked) {
+					game.state.start('play', true, false, cristpo);
 				}
 				break;
 		}
