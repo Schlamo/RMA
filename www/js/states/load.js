@@ -33,6 +33,7 @@ var loadState = {
 		game.load.tilemap('crypt', 'assets/csv/crypt.csv', null, Phaser.Tilemap.CSV);
 		game.load.tilemap('nexus', 'assets/csv/nexus.csv', null, Phaser.Tilemap.CSV);
 		game.load.tilemap('cristpo', 'assets/csv/cristpo.csv', null, Phaser.Tilemap.CSV);
+		game.load.tilemap('final', 'assets/csv/final.csv', null, Phaser.Tilemap.CSV);
 
 		//Tiles
 		game.load.image('tiles', 'assets/tiles/tiles.png');

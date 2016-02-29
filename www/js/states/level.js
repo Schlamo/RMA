@@ -65,9 +65,16 @@ var levelState = {
 		});
 
 		var level5 = game.add.sprite(0, 0, '5_locked');
+		if (!final.isLocked) {
+			level5.loadTexture('5_unlocked');
+		}
 		level5.anchor.set(0.5);
 		level5.x = width * 0.9;
 		level5.y = height - 75;
+		level5.inputEnabled = true;
+		level5.events.onInputDown.add(function () {
+			levelState.startLevel(5);
+		});
 
 		var shake = game.add.sprite(0, 0, 'shake');
 		shake.anchor.set(0.5);
@@ -100,6 +107,11 @@ var levelState = {
 			case 4:
 				if (!cristpo.isLocked) {
 					game.state.start('play', true, false, cristpo);
+				}
+				break;
+			case 5:
+				if (!final.isLocked) {
+					game.state.start('play', true, false, final);
 				}
 				break;
 		}

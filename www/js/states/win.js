@@ -20,9 +20,7 @@ var winState = {
 		okay.x = width / 2;
 		okay.y = height-75;
 		okay.inputEnabled = true;
-		okay.events.onInputDown.add(function () {
-			levelState.startLevel(4);
-		});
+		okay.events.onInputDown.add(this.toMenu);
 
 		var style = { font: "65px Arial", fill: "#ffffff", align: "center" };
 		var text = game.add.text(0,0, currentTime, style);
@@ -36,10 +34,13 @@ var winState = {
 				nexus.isLocked = false;
 				break;
 			case 'nexus':
-				crypt.isLocked = false;
+				cristpo.isLocked = false;
 				break;
-			case 'cookies':
-				crypt.isLocked = false;
+			case 'cristpo':
+				final.isLocked = false;
 		}
+	},
+	toMenu: function () {
+		game.state.start('level')
 	}
 };

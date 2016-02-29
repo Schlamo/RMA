@@ -17,7 +17,7 @@ var highscoreState = {
 		back.x = 15;
 		back.y = 15;
 		back.inputEnabled = true;
-		back.events.onTap.add(this.back);
+		back.events.onInputDown.add(this.back);
 
 	},
 

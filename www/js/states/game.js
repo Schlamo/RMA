@@ -18,7 +18,7 @@ var player,
 	playerDirection = 0;    //Walk Direction for the player sprite ( -1 = left  |  0 = none  |  1 = right )
 
 //Coins
-var maxCoins = 1,
+var maxCoins = 10,
 	currentCoins = 0;
 
 //Controls

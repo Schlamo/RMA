@@ -4,10 +4,11 @@ var playState = {
 		currentMap = _map;
 		currentCoins = 0;
 		map = game.add.tilemap(currentMap.csv, 32, 32);
+		playerDirection = 0;
 	},
 
 	create: function () {
-		//shake.startWatch(this.back, 40);
+		shake.startWatch(this.back, 40);
 
 		//Now add the Tileset
 		map.addTilesetImage('tiles');
