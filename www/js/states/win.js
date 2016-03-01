@@ -23,21 +23,35 @@ var winState = {
 		okay.events.onInputDown.add(this.toMenu);
 
 		var style = { font: "65px Arial", fill: "#ffffff", align: "center" };
-		var text = game.add.text(0,0, currentTime, style);
+		var text = game.add.text(0,0, currentTime + 's', style);
 		text.anchor.setTo(0.5);
+		text.x = width/2;
+		text.y = height/2 +30;
 
 		switch (currentMap.csv) {
 			case 'tutorial':
 				crypt.isLocked = false;
+				if(window.localStorage){
+					window.localStorage.setItem(crypt.csv,'unlocked');
+				}
 				break;
 			case 'crypt':
 				nexus.isLocked = false;
+				if(window.localStorage){
+					window.localStorage.setItem(nexus.csv,'unlocked');
+				}
 				break;
 			case 'nexus':
 				cristpo.isLocked = false;
+				if(window.localStorage){
+					window.localStorage.setItem(cristpo.csv,'unlocked');
+				}
 				break;
 			case 'cristpo':
 				final.isLocked = false;
+				if(window.localStorage){
+					window.localStorage.setItem(final.csv,'unlocked');
+				}
 		}
 	},
 	toMenu: function () {

@@ -88,11 +88,7 @@ var playState = {
 		enemies.callAll('body.velocity.x', 50);
 
 		//Character looking at the camera
-		this.stop();
-
-		//Timer
-		timer = game.time.create(false);
-		timer.start();
+		this.startTime = this.game.time.now;
 	},
 
 	update: function () {
@@ -140,7 +136,8 @@ var playState = {
 
 	win: function (player, win) {
 		win.kill();
-		game.state.start('win', true, false, timer.duration);
+		//console.log(this.timer);
+		game.state.start('win', true, false, parseInt((this.game.time.now-this.startTime)/1000));
 	},
 
 	lose: function () {

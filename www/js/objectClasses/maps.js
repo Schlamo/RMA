@@ -6,6 +6,10 @@ function Map(csv, coins, win, spikes, enemies, isLocked) {
 	this.spikes = spikes;
 	this.enemies = enemies;
 	this.isLocked = isLocked;
+
+	if(window.localStorage){
+		this.isLocked = !(window.localStorage.getItem(this.csv) != null);
+	}
 }
 
 var tutorial = new Map(
